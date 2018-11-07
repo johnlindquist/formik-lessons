@@ -1,28 +1,33 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react"
+import "./App.css"
+import { Formik, Form, Field } from "formik"
+import { Persist } from "formik-persist"
 
 class App extends Component {
+  state = {
+    firstName: "",
+    lastName: ""
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <>
+        <Formik onSubmit={values => this.setState(values)}>
+          {props => (
+            <Form style={{ display: "flex", flexDirection: "column" }}>
+              <label htmlFor="firstName">First Name</label>
+              <Field id="firstName" name="firstName" />
+              <label htmlFor="lastName">Last Name</label>
+              <Field id="lastName" name="lastName" />
+              <button type="submit">Submit</button>
+              <Persist name="person-form" />
+            </Form>
+          )}
+        </Formik>
+        {JSON.stringify(this.state)}
+      </>
+    )
   }
 }
 
-export default App;
+export default App
